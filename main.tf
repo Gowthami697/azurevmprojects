@@ -58,11 +58,11 @@ resource "azurerm_network_security_group" "example" {
   
 }
 
-resource "azurerm_network_security_rule" "example" {
+resource "azurerm_network_security_rule" "WINRMHTTP" {
 
-    name                       = "WINRM"
+    name                       = "WINRMHTTP"
     priority                   = 100
-    direction                  = "Outbound"
+    direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "*"
     source_port_range          = "*"
@@ -74,11 +74,27 @@ resource "azurerm_network_security_rule" "example" {
 
 }
 
-resource "azurerm_network_security_rule" "example1" {
+resource "azurerm_network_security_rule" "WINRMHTTPS" {
+
+    name                       = "WINRMHTTPS"
+    priority                   = 101
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "5986"	
+	source_address_prefix       = "*"
+	destination_address_prefix  = "*"	
+	resource_group_name         = azurerm_resource_group.main.name
+	network_security_group_name = azurerm_network_security_group.example.name
+
+}
+
+resource "azurerm_network_security_rule" "RDP" {
 
     name                       = "RDP"
-    priority                   = 101
-    direction                  = "Outbound"
+    priority                   = 102
+    direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "*"
     source_port_range          = "*"
@@ -115,3 +131,4 @@ resource "azurerm_windows_virtual_machine" "example" {
     version   = "latest"
   }
 }
+
