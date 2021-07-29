@@ -132,3 +132,11 @@ resource "azurerm_windows_virtual_machine" "example" {
   }
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "NetworkWatcherRG"
+    storage_account_name = "surendharbackendtf"
+    container_name       = "tfcontainer"
+    key                  = "tf/terraform.tfstate"
+  }
+}
